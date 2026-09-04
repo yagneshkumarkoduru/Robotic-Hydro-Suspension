@@ -152,8 +152,13 @@ Robotic-Hydro-Suspension-Project/
 ├── requirements.txt                    # Python environment specifications
 ├── figures/                            # Publication-grade simulation plots
 │   ├── fig1_bump_response_comparison.png
-│   └── fig2_suspension_deflection_tradeoff.png
+│   ├── fig2_suspension_deflection_tradeoff.png
+│   ├── fig3_preview_vs_reactive_comparison.png
+│   ├── fig4_sliding_surface_and_chattering_suppression.png
+│   └── fig5_ekf_tracking_error_residuals.png
 ├── src/
+│   ├── control/
+│   │   └── sliding_mode_preview.py     # Preview-augmented Sliding Mode Controller
 │   ├── simulation/
 │   │   └── suspension_dynamics.py      # Quarter-car state-space & Riccati solver
 │   ├── actuators/
@@ -161,6 +166,7 @@ Robotic-Hydro-Suspension-Project/
 │   │   ├── water_pump.py               # Hydraulic fluid pump duty-cycle control
 │   │   └── servo_motor.py              # Orifice valve angular position control
 │   ├── sensors/
+│   │   ├── ekf_observer.py             # Extended Kalman Filter for noisy IMU/ToF state estimation
 │   │   ├── mpu6050.py                  # IMU complementary filter & calibration
 │   │   ├── vl53l0x_lidar.py            # I2C ToF range measurement
 │   │   ├── microwave_radar.py          # RCWL-0516 Doppler radar motion sensing

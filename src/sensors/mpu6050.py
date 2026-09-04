@@ -1,4 +1,7 @@
-import smbus2
+try:
+    import smbus2
+except ImportError:
+    smbus2 = None
 import time
 import math
 
@@ -21,7 +24,10 @@ class MPU6050:
         
         :param bus: I2C bus number (default 1 for Raspberry Pi)
         """
-        self.bus = smbus2.SMBus(bus)
+        if smbus2 is not None:
+            self.bus = smbus2.SMBus(bus)
+        else:
+            self.bus = None
         
         # Wake up the MPU6050 by writing 0 to power management register
         self.bus.write_byte_data(self.DEVICE_ADDRESS, self.PWR_MGMT_1, 0)
