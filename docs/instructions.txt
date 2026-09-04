@@ -1,0 +1,46 @@
+ROBOTIC VEHICLE PROJECT - SETUP AND OPERATION INSTRUCTIONS
+
+Prerequisites:
+- Python 3.8+
+- Raspberry Pi or similar SBC
+- Required hardware components (listed in README.md)
+
+Hardware Setup:
+1. Connect sensors to appropriate GPIO pins
+2. Verify power requirements for each component
+3. Ensure proper grounding and electrical isolation
+
+Software Installation:
+1. Clone the project repository
+2. Create a virtual environment:
+   python3 -m venv venv
+   source venv/bin/activate
+
+3. Install dependencies:
+   pip install -r requirements.txt
+
+4. Configure hardware:
+   - Edit config/config.json with your specific hardware mappings
+   - Calibrate sensors using config/sensor_calibration.json
+
+Running the Vehicle:
+1. Perform pre-flight checks:
+   - Verify sensor connections
+   - Check battery levels
+   - Ensure clear operating area
+
+2. Start the main application:
+   python src/main.py
+
+3. Use Bluetooth controller for manual operation
+   - Refer to bluetooth_controller.py for protocol details
+
+Troubleshooting:
+- Check system_logs/ for error details
+- Verify GPIO connections
+- Ensure all dependencies are correctly installed
+
+Safety Warnings:
+- Always operate in a controlled environment
+- Maintain visual contact with the vehicle
+- Keep hands and objects clear during operation
