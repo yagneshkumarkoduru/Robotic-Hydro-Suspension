@@ -1,10 +1,6 @@
 """
-Extended Kalman Filter (EKF) Sensor Fusion for Active Suspension State Estimation
-Author: Yagnesh Kumar Koduru
-Domain: State Estimation, Sensor Fusion, Autonomous Mechatronics
-
-Fuses noisy MPU6050 vertical accelerometry (accelerometer + gyro) and 
-VL53L0X Time-of-Flight (ToF) road preview distance to estimate:
+Extended Kalman Filter (EKF) Sensor Fusion for Active Suspension State Estimation.
+Fuses noisy MPU6050 vertical accelerometry and VL53L0X Time-of-Flight (ToF) road preview distance to estimate:
 - States: [z_s - z_us, dot{z}_s, z_us - z_r, dot{z}_us]^T
 - Road disturbance profile z_r(t)
 """

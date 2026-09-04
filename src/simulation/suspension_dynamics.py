@@ -1,9 +1,6 @@
 """
-Active Hydro-Pneumatic Suspension Dynamics & Optimal Control Simulation
-Author: Yagnesh Kumar Koduru
-Domain: Mechatronic Systems, Active Damping, Physical Intelligence
-
-This module models a 2-DOF quarter-car hydro-pneumatic suspension system,
+Active Hydro-Pneumatic Suspension Dynamics & Optimal Control Simulation.
+Models a 2-DOF quarter-car hydro-pneumatic suspension system,
 comparing passive damping against Skyhook semi-active control and full-state LQR
 active force actuation under deterministic bump and stochastic ISO road profiles.
 """
@@ -141,7 +138,6 @@ class SuspensionSystem:
 def run_simulation():
     print("=" * 75)
     print("ACTIVE HYDRO-PNEUMATIC SUSPENSION CONTROL BENCHMARK")
-    print("Author: Yagnesh Kumar Koduru")
     print("=" * 75)
 
     system = SuspensionSystem()

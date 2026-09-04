@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
 """
-pinn_cbf_preview_controller.py
-==============================
 Physics-Informed Neural Network (PINN) Residual Dynamics &
 High-Order Control Barrier Function (HOCBF) Preview NMPC
 for Active Hydro-Pneumatic Suspension Systems.
-
-Author: Yagnesh Kumar Koduru
-Affiliation: Researcher | Esthien Labs
 """
 
 import numpy as np

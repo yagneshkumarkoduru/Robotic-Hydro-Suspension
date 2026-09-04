@@ -1,9 +1,5 @@
 """
-Preview-Augmented Sliding Mode Control (Preview-SMC) & EKF Sensor Fusion Benchmark
-Author: Yagnesh Kumar Koduru
-Repository: Robotic-Hydro-Suspension-Project
-Domain: Nonlinear Control, Active Suspension, Preview Sensing, Mechatronics
-
+Preview-Augmented Sliding Mode Control (Preview-SMC) & EKF Sensor Fusion Benchmark.
 Implements:
 1. Preview road height sensing via forward LiDAR (anticipatory actuation)
 2. Lyapunov-stable Sliding Mode Controller with boundary layer chattering suppression
@@ -97,7 +93,6 @@ class PreviewSMCController:
 def run_preview_smc_benchmark():
     print("=" * 80)
     print("PREVIEW-AUGMENTED SLIDING MODE CONTROL & EKF ACTIVE SUSPENSION BENCHMARK")
-    print("Author: Yagnesh Kumar Koduru")
     print("=" * 80)
 
     ms, mus, ks, cs, kt, ct = 15.0, 2.5, 950.0, 45.0, 6500.0, 5.0

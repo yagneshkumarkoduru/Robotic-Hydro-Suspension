@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Top-level entry point for Active Hydro-Pneumatic Suspension Simulation
-Author: Yagnesh Kumar Koduru
+Top-level entry point for Active Hydro-Pneumatic Suspension Simulation.
 """
 import os
 import sys

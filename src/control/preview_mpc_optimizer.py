@@ -1,8 +1,6 @@
 """
-Nonlinear Model Predictive Control (NMPC) with LiDAR Preview Horizon Optimization
-Author: Yagnesh Kumar Koduru
-Repository: Robotic-Hydro-Suspension
-Domain: Active Suspension Systems, Model Predictive Control, Mechatronic Actuation
+Model Predictive Control (NMPC) with LiDAR Preview Horizon Optimization.
+Finite-horizon anticipatory road disturbance mitigation with strict stroke constraints.
 """
 
 import os
@@ -174,7 +172,6 @@ class PreviewMPCSuspensionEngine:
 def run_preview_mpc_study():
     print("=" * 80)
     print("ACTIVE SUSPENSION PREVIEW NMPC OPTIMIZATION BENCHMARK")
-    print("Author: Yagnesh Kumar Koduru")
     print("=" * 80)
 
     engine = PreviewMPCSuspensionEngine()

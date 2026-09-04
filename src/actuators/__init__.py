@@ -6,13 +6,15 @@ for all actuator interfaces in the robotic vehicle project.
 """
 
 from .servo_motor import ServoMotor
-from .water_pump import WaterPump
+from .mr_damper_actuator import MRDamperActuator
+from .proportional_servo_valve import ProportionalServoValve
 from .motor_controller import DCMotor
 
 # Define which actuators will be exposed when using 'from actuators import *'
 __all__ = [
     'ServoMotor', 
-    'WaterPump', 
+    'MRDamperActuator',
+    'ProportionalServoValve',
     'DCMotor'
 ]
 
@@ -24,9 +26,10 @@ def initialize_all_actuators():
         dict: A dictionary of initialized actuator instances
     """
     actuators = {
-        'steering_servo': ServoMotor(pin=18),  # Example pin assignment
-        'water_pump': WaterPump(pin=23),       # Example pin assignment
-        'drive_motor': DCMotor(enable_pin=24, forward_pin=25, reverse_pin=26)  # Example pin assignments
+        'steering_servo': ServoMotor(pin=18),
+        'mr_damper': MRDamperActuator(max_current=2.5),
+        'servo_valve': ProportionalServoValve(max_displacement_mm=4.0),
+        'drive_motor': DCMotor(enable_pin=24, forward_pin=25, reverse_pin=26)
     }
     
     # Perform initialization for each actuator
