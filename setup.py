@@ -8,9 +8,9 @@ setup(
     long_description_content_type='text/markdown',
     
     # Project metadata
-    author='Ronin 1067',
-    author_email='yagneshkumar.k23@iiits.in',
-    url='https://github.com/Ronin1067/Robotic-Hydro-Suspension-Project',
+    author='Yagnesh Kumar Koduru',
+    author_email='yagneshkumar@esthien.com',
+    url='https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension-Project',
     
     # Package discovery
     packages=find_packages(where='src'),
