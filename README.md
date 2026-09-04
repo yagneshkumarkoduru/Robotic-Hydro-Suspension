@@ -2,8 +2,9 @@
 
 **Research Project | Embedded Mechatronics, Non-Newtonian Rheology & Physical Control Intelligence**
 
+[![CI](https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension/actions/workflows/ci.yml/badge.svg)](https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension/actions)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Control](https://img.shields.io/badge/control-Preview%20NMPC%20%7C%20HOCBF%20%7C%20PINN-green.svg)](docs/paper/RESEARCH_PAPER.md)
 [![Fluid](https://img.shields.io/badge/fluid-LORD%20MRF--132DG%20%7C%20N2%20Gas-red.svg)](docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md)
 [![Paper](https://img.shields.io/badge/paper-IEEE%20TCST%20Draft-purple.svg)](docs/paper/RESEARCH_PAPER.md)

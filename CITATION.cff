@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or research architecture in your work, please cite it as below."
+title: "Robotic-Hydro-Suspension: Active Magnetorheological Hydro-Pneumatic Architecture with Bingham-Papanastasiou Rheology and Preview PINN-HOCBF"
+authors:
+  - family-names: "Koduru"
+    given-names: "Yagnesh Kumar"
+    affiliation: "Esthien Labs"
+    orcid: "https://orcid.org/0009-0000-0000-0000"
+date-released: 2026-09-04
+repository-code: "https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension"
+license: "MIT"
+keywords:
+  - "magnetorheological fluid"
+  - "non-Newtonian rheology"
+  - "PINN"
+  - "Control Barrier Functions"
+  - "NMPC"
+  - "mechatronics"
