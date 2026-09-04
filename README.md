@@ -4,8 +4,11 @@
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Control](https://img.shields.io/badge/control-LQR%20%7C%20Skyhook-green.svg)](https://scipy.org/)
+[![Control](https://img.shields.io/badge/control-Preview%20NMPC%20%7C%20HOCBF%20%7C%20PINN-green.svg)](docs/paper/RESEARCH_PAPER.md)
+[![Paper](https://img.shields.io/badge/paper-IEEE%20TCST%20Draft-purple.svg)](docs/paper/RESEARCH_PAPER.md)
 [![Hardware](https://img.shields.io/badge/hardware-RPi4%20%7C%20CAN%20%7C%20IMU-orange.svg)]()
+
+> 📄 **Research Paper Available:** Read the full IEEE Transactions on Control Systems Technology manuscript: [**`docs/paper/RESEARCH_PAPER.md`**](docs/paper/RESEARCH_PAPER.md) | [LaTeX Source](docs/paper/Robotic_Hydro_Suspension_TCST.tex) with Theorem 1 (*Stroke Forward Invariance*) and PINN residual dynamics derivations.
 
 ---
 
