@@ -5,7 +5,7 @@ This module provides a centralized import and initialization
 for all sensor interfaces in the robotic vehicle project.
 """
 
-from .mpu6050 import MPU6050Sensor
+from .mpu6050 import MPU6050 as MPU6050Sensor
 from .vl53l0x_lidar import VL53L0XLidar
 from .ir_speed_sensor import IRSpeedSensor
 from .proximity_sensor import ProximitySensor
