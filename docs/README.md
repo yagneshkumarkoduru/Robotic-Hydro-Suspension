@@ -15,7 +15,7 @@ This project implements a sophisticated robotic vehicle with advanced sensing, c
 1. Clone the repository
 
 ```bash
-git clone https://github.com/Ronin1067/Robotic-Hydro-Suspension-Project
+git clone https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension
 cd robotic-vehicle-project
 
 ## Features

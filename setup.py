@@ -8,8 +8,8 @@ setup(
     long_description_content_type='text/markdown',
     
     # Project metadata
-    author='Yagnesh Kumar Koduru',
-    author_email='yagneshkumar@esthien.com',
+    author='Koduru Yagnesh Kumar',
+    author_email='yagneshkumarkoduru@gmail.com',
     url='https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension-Project',
     
     # Package discovery
