@@ -10,7 +10,7 @@ The **Active Magnetorheological Hydro-Pneumatic (MRHP) Suspension Architecture**
 | :--- | :--- | :--- | :--- | :--- | :---: |
 | **V1: Embedded Microcontroller** | Raspberry Pi 4 + STM32 FreeRTOS | Distributed Telemetry & Basic Actuation | Semi-Active Skyhook & Classical LQR | Hydro-Pneumatic Fluid | $1.0\text{ ms}$ ($1\text{ kHz}$) |
 | **V2: Magnetorheological Damper** | Industrial PWM H-Bridge Driver | Non-Newtonian Rheology & Gas Springs | Continuous Skyhook-MR + Current PI Loop | LORD MRF-132DG + $N_2$ Gas Accumulator | $0.1\text{ ms}$ ($10\text{ kHz}$) |
-| **V3: Autonomous Edge Compute** | FPGA / SoC (Zynq, Kria, Jetson) + LiDAR | Cavitation Compensation & Certified Safety | PINN Residual Observer + HOCBF Preview NMPC | Multi-Modal MRHP with Cavitation Modeling | $1.0\text{ ms}$ (Lookahead: $120\text{ ms}$) |
+| **V3: Autonomous Edge Compute** | FPGA / SoC (Zynq UltraScale+, Jetson) + LiDAR | Cavitation Compensation & Certified Safety | PINN Residual Observer + HOCBF Preview NMPC | Multi-Modal MRHP with Cavitation Modeling | $1.0\text{ ms}$ (Lookahead: $120\text{ ms}$) |
 
 ---
 
