@@ -10,7 +10,7 @@
 [![Paper](https://img.shields.io/badge/paper-IEEE%20TCST%20Draft-purple.svg)](docs/paper/RESEARCH_PAPER.md)
 [![Hardware](https://img.shields.io/badge/hardware-RPi4%20%7C%20STM32%20%7C%20CAN%20%7C%20IMU-orange.svg)](docs/IMPLEMENTATION_VERSIONS.md)
 
-> 📄 **Research Paper Draft Available:** Read the full IEEE Transactions on Control Systems Technology manuscript: [**`docs/paper/RESEARCH_PAPER.md`**](docs/paper/RESEARCH_PAPER.md) | [LaTeX Source](docs/paper/Robotic_Hydro_Suspension_TCST.tex) with Theorem 1 (*Forward Invariance of Suspension Stroke*) and PINN residual dynamics derivations.  
+> 📄 **Research Paper Draft Available:** Read the full research manuscript draft (target venue: IEEE Transactions on Control Systems Technology): [**`docs/paper/RESEARCH_PAPER.md`**](docs/paper/RESEARCH_PAPER.md) | [LaTeX Source](docs/paper/Robotic_Hydro_Suspension_TCST.tex) with Theorem 1 (*Forward Invariance of Suspension Stroke*) and PINN residual dynamics derivations.  
 > 🧪 **Fluid Rheology & Thermodynamics Guide:** Detailed mathematical derivations of Bingham-Papanastasiou non-Newtonian shear stress, Arrhenius thermal viscosity drift, and $N_2$ polytropic accumulator dynamics: [**`docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md`**](docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md).  
 > ⚙️ **Three Implementation Tiers:** Complete architectural comparison and firmware for V1, V2, and V3: [**`docs/IMPLEMENTATION_VERSIONS.md`**](docs/IMPLEMENTATION_VERSIONS.md).
 
@@ -244,13 +244,11 @@ pytest tests/
 ## 7. Citation
 
 ```bibtex
-@article{koduru2026hydro,
-  author    = {Koduru, Yagnesh Kumar},
-  title     = {Physics-Informed Preview NMPC with High-Order Control Barrier Functions for Active Robotic Magnetorheological Hydro-Pneumatic Suspension Systems},
-  journal   = {IEEE Transactions on Control Systems Technology},
-  year      = {2026},
-  volume    = {34},
-  number    = {3},
-  pages     = {1102--1115}
+@misc{koduru2026hydro,
+  author = {Koduru, Yagnesh Kumar},
+  title  = {Physics-Informed Preview NMPC with High-Order Control Barrier Functions for Active Robotic Magnetorheological Hydro-Pneumatic Suspension Systems},
+  year   = {2026},
+  note   = {Research manuscript draft; not peer reviewed},
+  url    = {https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension}
 }
 ```

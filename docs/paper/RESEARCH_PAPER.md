@@ -205,13 +205,11 @@ Evaluated across simulated multi-frequency terrain excitation ($f \in [1, 15]\te
 ## 6. Citation
 
 ```bibtex
-@article{koduru2026hydro,
-  author    = {Koduru, Yagnesh Kumar},
-  title     = {Physics-Informed Preview NMPC with High-Order Control Barrier Functions for Active Robotic Magnetorheological Hydro-Pneumatic Suspension Systems},
-  journal   = {IEEE Transactions on Control Systems Technology},
-  year      = {2026},
-  volume    = {34},
-  number    = {3},
-  pages     = {1102--1115}
+@misc{koduru2026hydro,
+  author = {Koduru, Yagnesh Kumar},
+  title  = {Physics-Informed Preview NMPC with High-Order Control Barrier Functions for Active Robotic Magnetorheological Hydro-Pneumatic Suspension Systems},
+  year   = {2026},
+  note   = {Research manuscript draft; not peer reviewed},
+  url    = {https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension}
 }
 ```
