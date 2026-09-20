@@ -21,7 +21,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy scipy matplotlib
+          pip install numpy scipy matplotlib pytest gpiozero
+
+      - name: Run test suite
+        run: |
+          python -m pytest -q tests
 
       - name: Bytecode Syntax Compilation Check
         run: |

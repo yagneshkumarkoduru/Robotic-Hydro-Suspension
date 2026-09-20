@@ -27,8 +27,8 @@ class MPU6050:
         if smbus2 is not None:
             self.bus = smbus2.SMBus(bus)
         else:
-            self.bus = None
-        
+            raise RuntimeError("smbus2 is required to talk to the MPU6050 over I2C")
+
         # Wake up the MPU6050 by writing 0 to power management register
         self.bus.write_byte_data(self.DEVICE_ADDRESS, self.PWR_MGMT_1, 0)
 

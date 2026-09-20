@@ -1,9 +1,7 @@
-# import RPi.GPIO as GPIO
-import gpiozero as GPIO
-import time
 import logging
-from .sensors.mpu6050 import MPU6050Sensor
-from .actuators.motor_controller import MotorController
+import time
+from .sensors.mpu6050 import MPU6050
+from .actuators.motor_controller import DCMotor
 from .communication.bluetooth_controller import BluetoothController
 
 class VehicleController:
@@ -18,11 +16,11 @@ class VehicleController:
         self.logger = logging.getLogger('VehicleController')
         
         # Initialize sensors
-        self.imu_sensor = MPU6050Sensor()
+        self.imu_sensor = MPU6050()
         
-        # Initialize motor controller
-        self.motor_controller = MotorController(
-            config['gpio']['dc_motor_pins']
+        # Initialize motor controller (pwm pin, forward pin, reverse pin)
+        self.motor_controller = DCMotor(
+            *config['gpio']['dc_motor_pins']
         )
         
         # Initialize communication
@@ -57,8 +55,8 @@ class VehicleController:
             
             # Adjust motor control based on IMU data
             if self._is_stable(imu_data):
-                self.motor_controller.set_speed(speed)
-                self.motor_controller.set_direction(direction)
+                polarity = 1 if str(direction).lower() in ("forward", "fwd") else -1
+                self.motor_controller.set_speed(speed, polarity)
                 self.logger.info(f"Driving: speed={speed}, direction={direction}")
             else:
                 self.logger.warning("Vehicle stability compromised. Stopping motors.")

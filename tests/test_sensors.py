@@ -7,8 +7,13 @@ import statistics
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import pytest
+
+pytest.importorskip("board", reason="sensor bench tests require the CircuitPython I2C stack on a Raspberry Pi")
+pytest.importorskip("gpiozero", reason="sensor bench tests require gpiozero on a Raspberry Pi")
+
 from src.sensors.mpu6050 import MPU6050
-from src.sensors.vl53l0x_lidar import VL53L0XSensor
+from src.sensors.vl53l0x_lidar import VL53L0XLidar
 from src.sensors.ir_speed_sensor import IRSpeedSensor
 from src.sensors.proximity_sensor import ProximitySensor
 from src.sensors.microwave_radar import MicrowaveRadarSensor
@@ -23,7 +28,7 @@ class TestSensors(unittest.TestCase):
             self.mpu = MPU6050()
             
             # LIDAR Sensor
-            self.lidar = VL53L0XSensor()
+            self.lidar = VL53L0XLidar()
             
             # IR Speed Sensor
             self.ir_speed = IRSpeedSensor(gpio_pin=17)

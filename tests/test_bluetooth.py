@@ -6,6 +6,10 @@ import time
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import pytest
+
+pytest.importorskip("serial", reason="bluetooth bench tests require pyserial and an HC-05 module")
+
 from src.communication.bluetooth_controller import BluetoothController
 
 class TestBluetoothController(unittest.TestCase):

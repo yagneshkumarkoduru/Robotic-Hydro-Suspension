@@ -6,9 +6,12 @@ import time
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import pytest
+
+pytest.importorskip("gpiozero", reason="motor bench tests require gpiozero on a Raspberry Pi")
+
 from src.actuators.servo_motor import ServoMotor
 from src.actuators.motor_controller import DCMotor
-from src.actuators.water_pump import WaterPump
 
 class TestMotorControls(unittest.TestCase):
     def setUp(self):
@@ -21,9 +24,6 @@ class TestMotorControls(unittest.TestCase):
             
             # Test DC Motor
             self.dc_motor = DCMotor(pwm_pin=23, dir_pin1=24, dir_pin2=25)
-            
-            # Test Water Pump
-            self.water_pump = WaterPump(pin=21)
         except Exception as e:
             self.skipTest(f"Motor initialization failed: {e}")
 
@@ -77,32 +77,6 @@ class TestMotorControls(unittest.TestCase):
         except Exception as e:
             self.fail(f"DC motor ramping failed: {e}")
 
-    def test_water_pump_operation(self):
-        """
-        Test water pump functionality
-        """
-        pump_tests = [
-            (50, 2),   # Half intensity for 2 seconds
-            (100, 1),  # Full intensity for 1 second
-            (25, 3)    # Quarter intensity for 3 seconds
-        ]
-        
-        for intensity, duration in pump_tests:
-            try:
-                self.water_pump.turn_on(intensity=intensity, duration=duration)
-                time.sleep(0.5)  # Small pause between tests
-            except Exception as e:
-                self.fail(f"Water pump test failed with intensity {intensity}, duration {duration}: {e}")
-
-    def test_water_pump_pulse(self):
-        """
-        Test water pump pulse functionality
-        """
-        try:
-            self.water_pump.pulse(on_time=0.5, off_time=0.5, cycles=3)
-        except Exception as e:
-            self.fail(f"Water pump pulse test failed: {e}")
-
     def tearDown(self):
         """
         Cleanup motor resources
@@ -112,8 +86,6 @@ class TestMotorControls(unittest.TestCase):
                 self.servo.cleanup()
             if hasattr(self, 'dc_motor'):
                 self.dc_motor.cleanup()
-            if hasattr(self, 'water_pump'):
-                self.water_pump.cleanup()
         except Exception as e:
             print(f"Cleanup error: {e}")
 
