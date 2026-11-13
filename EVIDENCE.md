@@ -160,7 +160,7 @@ delta_p = 0, T = 25 C), force residual in N:
 | T step +50 C | +8.62 |
 
 Note: figures of -0.95 N / +37.85 N attributed to a "PINN step test" in
-earlier session briefings have no artifact in this repository and do not
+earlier revisions have no artifact in this repository and do not
 reproduce from the module; they are superseded by the measured values
 above. The observer is an untrained random-weight network (weights drawn
 at construction, no training data committed); its outputs are a
