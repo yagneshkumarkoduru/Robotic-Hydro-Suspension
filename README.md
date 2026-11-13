@@ -5,12 +5,12 @@
 [![CI](https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension/actions/workflows/ci.yml/badge.svg)](https://github.com/yagneshkumarkoduru/Robotic-Hydro-Suspension/actions)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Control](https://img.shields.io/badge/control-Preview%20NMPC%20%7C%20HOCBF%20%7C%20PINN-green.svg)](docs/paper/RESEARCH_PAPER.md)
+[![Control](https://img.shields.io/badge/control-Preview%20LQ%20%7C%20HOCBF%20%7C%20MR-green.svg)](docs/paper/RESEARCH_PAPER.md)
 [![Fluid](https://img.shields.io/badge/fluid-LORD%20MRF--132DG%20%7C%20N2%20Gas-red.svg)](docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md)
 [![Paper](https://img.shields.io/badge/paper-IEEE%20TCST%20Draft-purple.svg)](docs/paper/RESEARCH_PAPER.md)
 [![Hardware](https://img.shields.io/badge/hardware-RPi4%20%7C%20STM32%20%7C%20CAN%20%7C%20IMU-orange.svg)](docs/IMPLEMENTATION_VERSIONS.md)
 
-> 📄 **Research Paper Draft Available:** Read the full research manuscript draft (target venue: IEEE Transactions on Control Systems Technology): [**`docs/paper/RESEARCH_PAPER.md`**](docs/paper/RESEARCH_PAPER.md) | [LaTeX Source](docs/paper/Robotic_Hydro_Suspension_TCST.tex) with Theorem 1 (*Forward Invariance of Suspension Stroke*) and PINN residual dynamics derivations.  
+> 📄 **Research Paper Draft Available:** Read the full research manuscript draft (target venue: IEEE Transactions on Control Systems Technology): [**`docs/paper/RESEARCH_PAPER.md`**](docs/paper/RESEARCH_PAPER.md) | [LaTeX Source](docs/paper/Robotic_Hydro_Suspension_TCST.tex) with Theorem 1 (*Forward Invariance of Suspension Stroke*) and HOCBF filter derivations.  
 > 🧪 **Fluid Rheology & Thermodynamics Guide:** Detailed mathematical derivations of Bingham-Papanastasiou non-Newtonian shear stress, Arrhenius thermal viscosity drift, and $N_2$ polytropic accumulator dynamics: [**`docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md`**](docs/FLUID_RHEOLOGY_AND_THERMODYNAMICS.md).  
 > ⚙️ **Three Implementation Tiers:** Complete architectural comparison and firmware for V1, V2, and V3: [**`docs/IMPLEMENTATION_VERSIONS.md`**](docs/IMPLEMENTATION_VERSIONS.md).
 
@@ -22,11 +22,11 @@ Autonomous ground robots traversing unstructured, high-speed off-road terrain fa
 
 This project introduces an **active Magnetorheological Hydro-Pneumatic (MRHP) suspension and multi-sensor telemetry framework** for an autonomous robotic ground vehicle:
 1. **Industrial Smart Fluid Medium**: Replaces conventional hydraulic oils or basic water systems with **LORD MRF-132DG** hydrocarbon-based magnetorheological fluid ($32\,\text{vol}\%$ carbonyl iron micro-particles) paired with a high-pressure **Nitrogen ($N_2$) hydropneumatic accumulator** ($P_0 = 3.2\,\text{MPa}$) providing progressive polytropic gas elasticity ($P V^\gamma = \text{const}$).
-2. **Multi-Horizon Control Synthesis**: Integrates 2-DOF quarter-car dynamic modeling with **Physics-Informed Preview NMPC** (120 ms forward LiDAR lookahead) and a real-time **High-Order Control Barrier Function (HOCBF)** safety filter running at 1 kHz to guarantee forward invariance of the stroke envelope.
+2. **Multi-Horizon Control Synthesis**: Integrates 2-DOF quarter-car dynamic modeling with a **preview LQ controller** (120 ms forward look-ahead) and a real-time **High-Order Control Barrier Function (HOCBF)** safety filter running at 1 kHz to guarantee forward invariance of the stroke envelope.
 3. **Multi-Tier Implementation Hierarchy**: Spans three concrete implementation tiers:
    - **Tier 1 (Embedded Microcontroller Baseline)**: STM32 FreeRTOS / Raspberry Pi 4 pairing over ISO 11898 SocketCAN HAL with CRC-15 validation.
-   - **Tier 2 (Magnetorheological Fluid & Thermodynamics)**: Bingham-Papanastasiou rheology with 10 kHz PWM current PI regulation, back-EMF decoupling, and Arrhenius thermal viscosity tracking.
-   - **Tier 3 (Autonomous Edge PINN-HOCBF Preview NMPC)**: Dynamic road surface profiler, differentiable QP safety filter, and online PINN cavitation observer.
+   - **Tier 2 (Magnetorheological Fluid & Thermodynamics)**: Bingham-Papanastasiou rheology with a 1 kHz current PI regulation model (measured 1.20 ms coil 10-90% rise), back-EMF decoupling, and Arrhenius thermal viscosity tracking.
+   - **Tier 3 (Autonomous Edge Stack)**: Dynamic road surface profiler, closed-form barrier-constrained force projection, and a documented roadmap for a learned fluid observer (not implemented; the current controllers use the nominal fluid model).
 
 ---
 
@@ -47,7 +47,7 @@ Where:
 - $z_{\text{rel}} = z_s - z_{us}$: Suspension deflection (stroke rattlespace, bounded by $\pm 38\,\text{mm}$)
 - $k_t = 6500\,\text{N/m}$, $c_t = 5.0\,\text{N}\cdot\text{s/m}$: Pneumatic tire stiffness and damping
 - $F_{\text{susp}}$: Combined force from the MR damper and $N_2$ gas accumulator
-- $F_{\text{unmodeled}}$: Cavitation, micro-orifice turbulence, and seal stiction residuals estimated online via PINN
+- $F_{\text{unmodeled}}$: cavitation, micro-orifice turbulence, and seal stiction residuals. The current controllers use the nominal model; a learned residual observer is listed as future work.
 
 ### 2.2 LORD MRF-132DG Magnetorheological Fluid Rheology
 
@@ -58,7 +58,7 @@ $$\tau(\dot{\gamma}, B, T) = \tau_y(B) \operatorname{sgn}(\dot{\gamma}) \left[ 1
 - **Yield Shear Stress**: $\tau_y(B) = \alpha B^\beta$ ($\alpha = 52.0\,\text{kPa/T}^\beta$, $\beta = 1.55$, saturated at $85\,\text{kPa}$).
 - **Continuous Regularization**: $m = 100.0\,\text{s}$ avoids discontinuous singularity at velocity zero-crossings.
 - **Arrhenius Viscosity Model**: Base oil viscosity $\eta(T) = \eta_0 \exp\left( \frac{E_a}{R} \left( \frac{1}{T} - \frac{1}{T_0} \right) \right)$, compensating for fluid heating up to $60^\circ\text{C}$.
-- **Electromagnetic Induction**: Core flux $B(I) = B_{\text{sat}} \frac{k_{\text{mag}} |I|}{1 + k_{\text{mag}} |I|}$ driven by a 10 kHz PWM current loop with $\tau_{\text{coil}} = 1.2\,\text{ms}$.
+- **Electromagnetic Induction**: Core flux $B(I) = B_{\text{sat}} \frac{k_{\text{mag}} |I|}{1 + k_{\text{mag}} |I|}$ driven by a 1 kHz PI current loop model with a measured $10$-$90\%$ coil rise time of $1.20\,\text{ms}$.
 
 ### 2.3 Nitrogen ($N_2$) Hydropneumatic Gas Accumulator
 
@@ -72,29 +72,49 @@ As piston stroke approaches the boundary $z_{\text{rel}} \to \delta_{\max}$, gas
 
 ## 3. Quantitative Experimental & Simulation Results
 
-### 3.1 Severe Obstacle Shock Benchmark ($45\,\text{mm}$ Cosine Bump)
+All numbers below are produced by the shared harness (`suspension_benchmark.py`):
+one 2-DOF quarter-car plant (15 kg corner), one metric definition set, one
+tuning procedure per controller class (score = RMS body acceleration + 5 x
+stroke excess in mm), 20-sample Monte Carlo on +/-15% of ms, ks, cs, kt.
+Regenerate with `python suspension_benchmark.py`; machine-readable results in
+`results/suspension_benchmark.json`.
 
-| Control Configuration | RMS Chassis Accel ($\text{m/s}^2$) | Peak Accel ($\text{m/s}^2$) | Peak Stroke Deflection ($\text{mm}$) | Mechanical Safety Status |
+### 3.1 45 mm Cosine Bump Benchmark
+
+| Control Configuration | RMS Accel (m/s2) | Peak Accel (m/s2) | Peak Stroke (mm) | Stroke Violations (>38 mm) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Passive Baseline** | 2.184 | 6.421 | 41.21 | **Violated (Bottomed Out)** |
-| **Skyhook Semi-Active** | 1.482 | 4.812 | 36.40 | Borderline |
-| **Standard LQR** | 0.841 | 2.653 | 34.20 | Borderline |
-| **PI-Preview HOCBF (Ours)** | **0.785** | **2.104** | **31.00** | **Strictly Verified (Safe)** |
+| Passive baseline | 1.049 | 4.093 | 44.78 | 258 |
+| Skyhook semi-active | 0.718 | 3.342 | 35.37 | 0 |
+| LQR (no filter) | **0.268** | 1.321 | 48.60 | 387 |
+| Preview LQR (120 ms look-ahead) | 1.038 | 4.885 | 34.26 | 0 |
+| HOCBF-filtered LQR | 0.586 | 5.535 | 37.95 | **0** |
+
+Measured findings:
+1. The unfiltered LQR is comfort-optimal (74% RMS gain vs passive) but drives
+   the suspension 10.6 mm past the physical stroke limit; it is not deployable
+   as-is.
+2. The HOCBF stroke filter keeps a 44% RMS comfort gain with **zero** stroke
+   violations; it is the best constraint-safe active controller measured here.
+3. The simple preview feedforward does not beat the barrier-filtered LQR on
+   this scenario; reported as measured.
 
 <p align="center">
-  <img src="figures/fig_pinn_hocbf_safety_verification.png" alt="PINN HOCBF Safety Verification" width="85%" />
+  <img src="figures/fig_pinn_hocbf_safety_verification.png" alt="HOCBF safety verification" width="85%" />
 </p>
 
-### 3.2 10 kHz MR Fluid Damper Dynamics Benchmark
+### 3.2 MR Fluid Damper Benchmark (shared harness, skyhook-equivalent current law)
 
-Benchmarking the continuous Bingham-Papanastasiou MR damper over multi-frequency terrain excitation:
+The MR damper force is the field-dependent yield force only (the plant already
+carries the nominal gas-spring stiffness and passive damping); the current is
+commanded by inverting the fluid's yield-stress map to produce the skyhook
+force, with the gain tuned by the same score as every other controller.
 
 | Metric | Measured Result | Significance |
 | :--- | :---: | :--- |
-| **Sprung Mass RMS Acceleration** | **$0.684\,\text{m/s}^2$** | **$56.9\%$ vibration attenuation** vs passive |
-| **Dynamic Yield Stress Authority** | **$0 \to 83.7\,\text{kPa}$** | Instantaneous continuous damping control |
-| **Electromagnetic Actuation Lag** | **$< 1.2\,\text{ms}$** | 10 kHz current loop eliminates coil latency |
-| **Piston Stroke Utilization** | **$16.8\,\text{mm}$** (max $38.0\,\text{mm}$) | $55.8\%$ safety rattlespace margin preserved |
+| **Sprung mass RMS acceleration** | **0.801 m/s2** | **23.6% attenuation** vs passive (1.049 m/s2) |
+| **Peak stroke** | **33.82 mm** | 0 violations; passive bottomed out (44.78 mm, 258 violations) |
+| **Dynamic yield stress authority** | 0 to 7.3 kPa | peak yield force 44 N at the tuned operating point |
+| **Coil driver 10-90% rise time** | **1.20 ms** | measured from the driver model at 0.2 ms steps |
 
 <p align="center">
   <img src="figures/fig_mr_fluid_rheology_benchmark.png" alt="MR Fluid Rheology Benchmark" width="85%" />
@@ -107,7 +127,7 @@ Benchmarking the continuous Bingham-Papanastasiou MR damper over multi-frequency
 ```text
                +-------------------------------------------+
                |        Raspberry Pi 4 Model B             |
-               | (LiDAR Preview, PINN Observer, NMPC)     |
+               | (Preview, HOCBF Filter)                    |
                +--------------------+----------------------+
                                     |
              +-----------------------+-----------------------+

@@ -1,0 +1,177 @@
+{
+  "plant": {
+    "ms": 15.0,
+    "mus": 2.5,
+    "ks": 950.0,
+    "cs": 45.0,
+    "kt": 6500.0,
+    "ct": 5.0,
+    "stroke_max": 0.038,
+    "force_max": 400.0
+  },
+  "gains": {
+    "skyhook": {
+      "c_sky": 200.0
+    },
+    "preview": {
+      "k_preview": -6000.0
+    },
+    "hocbf": {
+      "g1": 60.0,
+      "g2": 120.0
+    }
+  },
+  "scenarios": {
+    "bump": {
+      "scenario": {
+        "t_end": 2.5,
+        "dt": 0.0002,
+        "bump_height": 0.045,
+        "bump_at": 0.4,
+        "bump_duration": 0.25,
+        "road_kind": "bump",
+        "iso_speed_m_s": 5.0,
+        "iso_seed": 20261011,
+        "preview_s": 0.12
+      },
+      "controllers": {
+        "passive": {
+          "rms_accel_m_s2": 1.048538408651185,
+          "peak_accel_m_s2": 4.093193590024996,
+          "peak_stroke_mm": 44.784826795870444,
+          "stroke_violation_samples": 258,
+          "rms_tire_deflection_mm": 2.6501282536439446,
+          "peak_force_n": 0.0,
+          "rms_force_n": 0.0
+        },
+        "skyhook": {
+          "rms_accel_m_s2": 0.7178776628949609,
+          "peak_accel_m_s2": 3.3420609618391506,
+          "peak_stroke_mm": 35.36857611632913,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.1552810159683,
+          "peak_force_n": 41.515706259807175,
+          "rms_force_n": 8.493412717625215
+        },
+        "lqr": {
+          "rms_accel_m_s2": 0.2683727544713761,
+          "peak_accel_m_s2": 1.3208136917664328,
+          "peak_stroke_mm": 48.5979594344694,
+          "stroke_violation_samples": 387,
+          "rms_tire_deflection_mm": 2.3198436870375603,
+          "peak_force_n": 51.769587156897124,
+          "rms_force_n": 10.71198168986296
+        },
+        "preview_lqr": {
+          "rms_accel_m_s2": 1.0384805003604731,
+          "peak_accel_m_s2": 4.884553589912452,
+          "peak_stroke_mm": 34.26430739605877,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 4.0855864156136,
+          "peak_force_n": 107.03760489952131,
+          "rms_force_n": 24.375732092192337
+        },
+        "hocbf_lqr": {
+          "rms_accel_m_s2": 0.586156439339524,
+          "peak_accel_m_s2": 5.535305404652784,
+          "peak_stroke_mm": 37.9466794223811,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.42739149866179,
+          "peak_force_n": 84.51698241583217,
+          "rms_force_n": 12.771318419650072
+        }
+      }
+    },
+    "iso": {
+      "scenario": {
+        "t_end": 2.5,
+        "dt": 0.0002,
+        "bump_height": 0.045,
+        "bump_at": 0.4,
+        "bump_duration": 0.25,
+        "road_kind": "iso",
+        "iso_speed_m_s": 5.0,
+        "iso_seed": 20261011,
+        "preview_s": 0.12
+      },
+      "controllers": {
+        "passive": {
+          "rms_accel_m_s2": 0.4485972163186286,
+          "peak_accel_m_s2": 1.253703053917376,
+          "peak_stroke_mm": 13.508220657538054,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.018722224145703,
+          "peak_force_n": 0.0,
+          "rms_force_n": 0.0
+        },
+        "skyhook": {
+          "rms_accel_m_s2": 0.4818397898251812,
+          "peak_accel_m_s2": 1.1278126766018584,
+          "peak_stroke_mm": 12.47679568155328,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.0634932294172708,
+          "peak_force_n": 16.709408113333822,
+          "rms_force_n": 4.612147670793073
+        },
+        "lqr": {
+          "rms_accel_m_s2": 0.27038465953875646,
+          "peak_accel_m_s2": 0.6809879539597862,
+          "peak_stroke_mm": 21.85191052843629,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.574426698849601,
+          "peak_force_n": 22.393462336345383,
+          "rms_force_n": 9.587535172516525
+        },
+        "preview_lqr": {
+          "rms_accel_m_s2": 0.6298473067173104,
+          "peak_accel_m_s2": 3.0660099832962113,
+          "peak_stroke_mm": 12.205311853593567,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 3.460236045033112,
+          "peak_force_n": 46.121687412440096,
+          "rms_force_n": 13.49481588964058
+        },
+        "hocbf_lqr": {
+          "rms_accel_m_s2": 0.27038465953875646,
+          "peak_accel_m_s2": 0.6809879539597862,
+          "peak_stroke_mm": 21.85191052843629,
+          "stroke_violation_samples": 0,
+          "rms_tire_deflection_mm": 2.574426698849601,
+          "peak_force_n": 22.393462336345383,
+          "rms_force_n": 9.587535172516525
+        }
+      }
+    }
+  },
+  "monte_carlo": {
+    "samples": 20,
+    "seed": 20261011,
+    "summary": {
+      "passive": {
+        "rms_accel_mean": 1.063558688314052,
+        "rms_accel_std": 0.10743207761797673,
+        "peak_stroke_mean_mm": 44.8140493025886
+      },
+      "skyhook": {
+        "rms_accel_mean": 0.7140637026439915,
+        "rms_accel_std": 0.055834778523840826,
+        "peak_stroke_mean_mm": 35.379438039542016
+      },
+      "lqr": {
+        "rms_accel_mean": 0.2662689342949168,
+        "rms_accel_std": 0.011868507546799797,
+        "peak_stroke_mean_mm": 48.22205133550737
+      },
+      "preview_lqr": {
+        "rms_accel_mean": 1.0383915114010214,
+        "rms_accel_std": 0.016420997220487035,
+        "peak_stroke_mean_mm": 33.71123073047268
+      },
+      "hocbf_lqr": {
+        "rms_accel_mean": 0.5799580247718014,
+        "rms_accel_std": 0.031036167460988317,
+        "peak_stroke_mean_mm": 37.94675785582207
+      }
+    }
+  }
+}

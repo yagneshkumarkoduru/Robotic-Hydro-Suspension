@@ -27,3 +27,27 @@ class PINNFluidObserver:
         h = np.tanh(x @ self.W1 + self.b1)
         force_residual = float((h @ self.W2 + self.b2)[0]) * 120.0 # Scale to N
         return force_residual
+
+
+def self_check() -> dict:
+    """Deterministic step test of the residual observer (MODEL class).
+
+    Applies unit steps on each input channel at the operating point
+    (z_rel = 0, v_rel = 0, delta_p = 0, T = 25 C) and records the force
+    residual. Deterministic because the constructor fixes seed = 42.
+    """
+    obs = PINNFluidObserver()
+    out = {
+        "baseline_n": obs.predict_residual(0.0, 0.0, 0.0, 25.0),
+        "v_rel_step_neg_1mps_n": obs.predict_residual(0.0, -1.0, 0.0, 25.0),
+        "v_rel_step_pos_1mps_n": obs.predict_residual(0.0, 1.0, 0.0, 25.0),
+        "delta_p_step_pos_1mpa_n": obs.predict_residual(0.0, 0.0, 1.0e6, 25.0),
+        "delta_p_step_neg_1mpa_n": obs.predict_residual(0.0, 0.0, -1.0e6, 25.0),
+        "temp_step_pos_50c_n": obs.predict_residual(0.0, 0.0, 0.0, 75.0),
+    }
+    return out
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(self_check(), indent=2))

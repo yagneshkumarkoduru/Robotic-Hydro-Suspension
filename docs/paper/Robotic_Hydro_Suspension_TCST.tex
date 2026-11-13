@@ -116,33 +116,36 @@ guaranteeing minimal deviation from the performance-optimal preview trajectory w
 
 \begin{table}[t]
 \centering
-\caption{Dynamic Quarter-Car Performance Comparison (45\,mm Bump Shock)}
+\caption{Dynamic Quarter-Car Performance Comparison (45\,mm Bump, shared harness)}
 \label{tab:results}
 \begin{tabular}{lcccc}
 \toprule
-\textbf{Controller} & \textbf{RMS $\ddot{z}_s$ (m/s$^2$)} & \textbf{Peak $\ddot{z}_s$ (m/s$^2$)} & \textbf{Peak $|z_{\text{rel}}|$ (mm)} & \textbf{Safety Viol.} \\
+\textbf{Controller} & \textbf{RMS $\ddot{z}_s$ (m/s$^2$)} & \textbf{Peak $\ddot{z}_s$ (m/s$^2$)} & \textbf{Peak $|z_{\text{rel}}|$ (mm)} & \textbf{Stroke Viol. Samples} \\
 \midrule
-Passive Baseline     & 2.184 & 6.421 & 41.21 & \textcolor{red}{VIOLATED} \\
-Skyhook Semi-Active  & 1.482 & 4.812 & 36.40 & Borderline \\
-Standard LQR         & 0.841 & 2.653 & 34.20 & Borderline \\
-\textbf{PI-Preview HOCBF (Ours)} & \textbf{0.785} & \textbf{2.104} & \textbf{31.00} & \textbf{0.00\% (SAFE)} \\
+Passive Baseline     & 1.049 & 4.093 & 44.78 & 258 \\
+Skyhook Semi-Active  & 0.718 & 3.342 & 35.37 & 0 \\
+Standard LQR         & 0.268 & 1.321 & 48.60 & 387 \\
+Preview LQR          & 1.038 & 4.885 & 34.26 & 0 \\
+\textbf{HOCBF-Filtered LQR (Ours)} & 0.586 & 5.535 & 37.95 & \textbf{0} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Transient Shock Rejection}
-As summarized in Table~\ref{tab:results}, the proposed PI-Preview HOCBF controller achieves:
+As summarized in Table~\ref{tab:results} (all values produced by
+\texttt{suspension\_benchmark.py}; 20-sample Monte Carlo over $\pm15\%$ on
+$m_s, k_s, c_s, k_t$ confirms the ordering):
 \begin{itemize}
-    \item \textbf{64.05\% reduction in RMS vertical acceleration} compared to passive baseline ($2.184 \to 0.785$\,m/s$^2$), isolating sensor payloads.
-    \item \textbf{Strict Stroke Adherence}: While passive suspension bottoms out ($41.21$\,mm $> 38.00$\,mm limit), HOCBF restricts peak stroke to $31.00$\,mm.
-    \item \textbf{Hydraulic Cavitation Mitigation}: Online PINN estimation compensates for non-linear valve latency within 2\,ms.
+    \item \textbf{44\% reduction in RMS vertical acceleration} with zero stroke violations for the HOCBF-filtered LQR ($1.049 \to 0.586$\,m/s$^2$); the unfiltered LQR reaches $0.268$\,m/s$^2$ but exceeds the stroke limit by $10.6$\,mm.
+    \item \textbf{Strict stroke adherence}: passive bottoming ($44.78$\,mm $> 38.00$\,mm) and LQR violations (387 samples) are eliminated by the barrier filter (peak $37.95$\,mm, zero violations).
+    \item \textbf{MR damper}: skyhook-equivalent current law reaches $0.801$\,m/s$^2$ RMS ($23.6\%$ vs passive) with zero violations at a measured coil $10$-$90\%$ rise time of $1.20$\,ms.
 \end{itemize}
 
 \section{Conclusion}
 This paper presented a Physics-Informed Preview NMPC architecture with High-Order Control Barrier Functions for active robotic hydro-pneumatic suspensions. The framework bridges theoretical safety guarantees with physical experimental validation, providing deterministic rattlespace confinement and dramatic ride comfort isolation for autonomous ground robots.
 
 \begin{thebibliography}{00}
-\bibitem{koduru2026hydro} Koduru Yagnesh Kumar, ``Physics-Informed Preview NMPC with Control Barrier Functions for Active Robotic Hydro-Pneumatic Suspension Systems,'' \emph{IEEE Trans. Control Syst. Technol.}, vol.~34, no.~3, pp.~1102--1115, 2026.
+\bibitem{koduru2026hydro} Koduru Yagnesh Kumar, ``Physics-Informed Preview NMPC with Control Barrier Functions for Active Robotic Hydro-Pneumatic Suspension Systems,'' unpublished manuscript (draft), 2026.
 \bibitem{ames2019cbf} A. D. Ames et al., ``Control barrier functions: Theory and applications,'' in \emph{Proc. 18th Eur. Control Conf. (ECC)}, 2019, pp.~3420--3431.
 \bibitem{raissi2019pinn} M. Raissi, P. Perdikaris, and G. E. Karniadakis, ``Physics-informed neural networks: A deep learning framework for solving forward and inverse problems,'' \emph{J. Comput. Phys.}, vol.~378, pp.~686--707, 2019.
 \bibitem{karnopp1974skyhook} D. Karnopp et al., ``Vibration control using semi-active force generators,'' \emph{ASME J. Eng. Ind.}, vol.~96, no.~2, pp.~619--626, 1974.

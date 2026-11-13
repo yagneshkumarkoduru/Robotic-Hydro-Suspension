@@ -1,0 +1,23 @@
+{
+  "effective_area_m2": 0.006,
+  "passive": {
+    "rms_accel_m_s2": 1.048538408651185,
+    "peak_accel_m_s2": 4.093193590024996,
+    "peak_stroke_mm": 44.784826795870444,
+    "stroke_violation_samples": 258,
+    "rms_tire_deflection_mm": 2.6501282536439446,
+    "peak_force_n": 0.0,
+    "rms_force_n": 0.0
+  },
+  "mr_skyhook": {
+    "rms_accel_m_s2": 0.8008488382807021,
+    "peak_accel_m_s2": 3.587904573207276,
+    "peak_stroke_mm": 33.81753793781955,
+    "stroke_violation_samples": 0,
+    "rms_tire_deflection_mm": 2.314859628015123,
+    "peak_force_n": 42.12410531289916,
+    "rms_force_n": 9.054390377031703
+  },
+  "coil_rise_ms": 1.2000000000000002,
+  "peak_yield_stress_pa": 7300.074141472154
+}

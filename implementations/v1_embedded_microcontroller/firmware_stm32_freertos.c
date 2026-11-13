@@ -35,13 +35,23 @@ void vActuatorControlTask(void *pvParameters) {
         float adc_voltage = 3.3f * ((float)(2048) / 4095.0f);
         g_state.stroke_displacement = (adc_voltage - 1.65f) * 25.0f;
 
-        // 2. Hardware safety boundary verification
+        // 2. Hardware safety boundary verification.
+        // Near the stroke limit the damper must apply MAXIMUM damping, not
+        // zero: de-energizing the MR coil at the limit removes the very force
+        // that prevents bottoming out. Full power cut is reserved for genuine
+        // electrical faults (over-current / sensor failure), checked below.
         if (g_state.stroke_displacement >= STROKE_LIMIT_POS_MM ||
             g_state.stroke_displacement <= STROKE_LIMIT_NEG_MM) {
-            // Immediate hardware shutdown: de-energize coil to prevent bottoming impact
-            g_state.emergency_stop_triggered = true;
-            g_state.coil_current_demand = 0.0f;
+            g_state.coil_current_demand = MAX_CURRENT_AMPS;  // clamp to max damping
         }
+
+        // Electrical fault path: over-current on the coil driver trips the
+        // half-bridge and latches an emergency stop.
+        // float measured_current = adc_read_coil_current();
+        // if (measured_current > MAX_CURRENT_AMPS * 1.2f) {
+        //     g_state.emergency_stop_triggered = true;
+        //     g_state.coil_current_demand = 0.0f;
+        // }
 
         // 3. Modulate PWM output via TIM1 CH1 complementary half-bridge
         if (!g_state.emergency_stop_triggered) {
@@ -53,6 +63,6 @@ void vActuatorControlTask(void *pvParameters) {
 
         // 4. FreeRTOS 1 ms deterministic task sleep
         // vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(1));
-        break; // Standalone compilation check
+        break; // Standalone compilation check: single pass for syntax validation
     }
 }

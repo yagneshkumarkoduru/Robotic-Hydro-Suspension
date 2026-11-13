@@ -1,0 +1,9 @@
+# Hardware-only dependencies for Raspberry Pi / STM32 telemetry stacks.
+# python-can is LGPL-3.0: installing this file links an LGPL component, which
+# is fine for the research hardware rig but must be reviewed before any
+# product distribution.
+RPi.GPIO>=0.7.1
+smbus2>=0.4.2
+pyserial>=3.5
+mpu6050-raspberrypi>=1.2.0
+python-can>=4.1.0

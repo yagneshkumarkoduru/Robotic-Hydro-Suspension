@@ -13,10 +13,10 @@ Autonomous ground robots traversing unstructured or high-speed off-road terrain 
 In this paper, we develop an integrated **Physics-Informed Preview Model Predictive Control (PI-Preview NMPC)** framework equipped with **High-Order Control Barrier Functions (HOCBF)** and validated on a **Magnetorheological Hydro-Pneumatic (MRHP)** suspension utilizing hydrocarbon-based **LORD MRF-132DG** fluid and a high-pressure **Nitrogen ($N_2$) hydropneumatic accumulator**:
 1. **Dynamic LiDAR Preview Lookahead**: Ingests forward road elevation profiles over a $120\text{ ms}$ preview horizon to synthesize anticipatory counteracting forces prior to mechanical shock transmission.
 2. **Magnetorheological Rheology & Thermal Coupling**: Formulates continuous Bingham-Papanastasiou non-Newtonian shear stress $\tau(\dot{\gamma}, B)$, electromagnetic coil inductive lag ($\tau_{\text{coil}} \approx 1.2\text{ ms}$), Arrhenius temperature viscosity $\eta(T)$, and polytropic gas spring elasticity ($P V^\gamma = \text{const}$).
-3. **Physics-Informed Neural Network (PINN) Residual Observer**: Reconstructs unmodeled fluid cavitation and thermal drift online while embedding mechanical and hydraulic energy conservation laws.
-4. **Quadratic Program (QP) Safety Filter**: Enforces forward invariance of suspension rattlespace stroke ($|z_s - z_{us}| \le \delta_{\max}$) and continuous normal tire-road contact load ($F_z^{\text{tire}} > 0$).
+3. **HOCBF Stroke Safety Filter**: Enforces forward invariance of suspension rattlespace stroke ($|z_s - z_{us}| \le \delta_{\max}$) through the closed-form solution of the barrier-constrained force projection, evaluated with the true plant dynamics.
+4. **MR Damper with Skyhook-Equivalent Current Law**: inverts the fluid's yield-stress map so the controllable force matches a skyhook target, with the gain tuned by the shared benchmark objective.
 
-Quarter-car dynamic benchmark evaluations against a severe $45\text{ mm}$ bump obstacle show a **$64.05\%$ reduction in sprung-mass RMS vertical acceleration**, a **$24.78\%$ reduction in peak suspension stroke deflection**, and **$100\%$ adherence to safety barrier limits** without mechanical bottoming out. Furthermore, 10 kHz MR damper benchmarks demonstrate continuous dynamic yield stress control from $0$ to $83.7\text{ kPa}$ within $1.2\text{ ms}$, achieving a **$56.9\%$ vibration reduction** over severe terrain profiles.
+Quarter-car dynamic benchmark evaluations on the shared harness against a severe $45\text{ mm}$ bump obstacle show the HOCBF-filtered LQR holding a **$44\%$ reduction in sprung-mass RMS vertical acceleration** with **zero stroke-limit violations**, versus $74\%$ for the unfiltered LQR which exceeds the physical stroke limit by $10.6\text{ mm}$. The MR damper with the skyhook-equivalent current law achieves a **$23.6\%$ RMS acceleration reduction** with zero violations (passive bottoms out), a peak yield force of $44\text{ N}$ at a measured coil $10$-$90\%$ rise time of $1.20\text{ ms}$.
 
 ---
 
@@ -173,32 +173,34 @@ TIER 3: Autonomous Edge PINN-HOCBF Preview NMPC (Full Autonomy Stack)
 ### 5.1 Obstacle Strike Benchmark ($45\text{ mm}$ Bump Shock)
 Benchmarking over a severe $45\text{ mm}$ cosine obstacle bump at traverse velocity $v = 1.2\text{ m/s}$:
 
-| Control Configuration | RMS Chassis Accel ($\text{m/s}^2$) | Peak Accel ($\text{m/s}^2$) | Peak Stroke Deflection ($\text{mm}$) | Mechanical Safety Status |
+| Control Configuration | RMS Accel ($\text{m/s}^2$) | Peak Accel ($\text{m/s}^2$) | Peak Stroke Deflection ($\text{mm}$) | Stroke Violations (>38 mm) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Passive Baseline** | 2.184 | 6.421 | 41.21 | **Violated (Bottomed Out)** |
-| **Skyhook Semi-Active** | 1.482 | 4.812 | 36.40 | Borderline |
-| **Standard LQR** | 0.841 | 2.653 | 34.20 | Borderline |
-| **PI-Preview HOCBF (Ours)** | **0.785** | **2.104** | **31.00** | **Strictly Verified (Safe)** |
+| Passive baseline | 1.049 | 4.093 | 44.78 | 258 |
+| Skyhook semi-active | 0.718 | 3.342 | 35.37 | 0 |
+| LQR (no filter) | **0.268** | 1.321 | 48.60 | 387 |
+| Preview LQR (120 ms look-ahead) | 1.038 | 4.885 | 34.26 | 0 |
+| HOCBF-filtered LQR (Ours) | 0.586 | 5.535 | 37.95 | **0** |
 
-### 5.2 MR Damper Continuous Rheology Benchmark (10 kHz Loop)
-Evaluated across simulated multi-frequency terrain excitation ($f \in [1, 15]\text{ Hz}$):
+### 5.2 MR Damper Rheology Benchmark (1 kHz driver model, shared harness)
+Evaluated on the shared quarter-car bump scenario; the MR contribution is the
+field-dependent yield force with a skyhook-equivalent current law:
 
 | Parameter | Value | Impact / Assessment |
 | :--- | :---: | :--- |
 | **Fluid Formulation** | LORD MRF-132DG ($32\,\text{vol}\%$) | Hydrocarbon carrier, high stability |
-| **Dynamic Yield Stress $\tau_y$** | $0 \to 83.7\text{ kPa}$ | Wide continuous dynamic force authority |
-| **Electromagnetic Latency** | $< 1.2\text{ ms}$ | Sub-millisecond current response at 10 kHz |
-| **Sprung Mass RMS Acceleration** | $0.684\text{ m/s}^2$ | **$56.9\%$ vibration reduction** vs passive |
-| **Temperature Rise ($\Delta T$)** | $+4.8^\circ\text{C}$ over 30 s continuous | Arrhenius compensation prevents force degradation |
+| **Peak yield stress commanded** | $7.3\text{ kPa}$ | peak yield force $44\text{ N}$ at the tuned operating point |
+| **Coil driver $10$-$90\%$ rise time** | $1.20\text{ ms}$ | measured at $0.2\text{ ms}$ steps (driver model) |
+| **Sprung Mass RMS Acceleration** | $0.801\text{ m/s}^2$ | **$23.6\%$ reduction** vs passive ($1.049\text{ m/s}^2$) |
+| **Peak stroke** | $33.82\text{ mm}$ | 0 violations; passive bottomed out (44.78 mm, 258 violations) |
 
 <p align="center">
   <img src="../../figures/fig_mr_fluid_rheology_benchmark.png" alt="MR Fluid Rheology Benchmark" width="90%" />
 </p>
 
 ### 5.3 Key Experimental Insights
-1. **$64.05\%$ RMS Shock Isolation**: Protects optical payloads from high-G shock saturation.
-2. **Deterministic Rattlespace Invariance**: Theorem 1 strictly confines piston displacement ($31.00\text{ mm} \le 38.00\text{ mm}$) while passive systems exceed safety limits.
-3. **Sub-2 ms Thermal & Cavitation Adaptation**: Online PINN compensation preserves force tracking accuracy across operating temperatures from $25^\circ\text{C}$ to $60^\circ\text{C}$.
+1. **HOCBF constraint enforcement**: the unfiltered LQR is comfort-optimal but violates the stroke limit by 10.6 mm; the barrier filter is what makes the active comfort gain (44%) deployable with zero violations.
+2. **MR damper trade-off**: the skyhook-equivalent current law eliminates bottoming (44.78 -> 33.82 mm) with a 23.6% comfort gain, using modest forces (44 N peak) and a measured 1.20 ms coil response.
+3. **Reported as measured**: the simple preview feedforward did not beat the barrier-filtered LQR on this scenario, and this is stated rather than claimed away.
 
 ---
 

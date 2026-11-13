@@ -1,0 +1,35 @@
+{
+  "plant": {
+    "ms": 15.0,
+    "mus": 2.5,
+    "ks": 950.0,
+    "cs": 45.0,
+    "kt": 6500.0,
+    "ct": 5.0,
+    "stroke_max": 0.038,
+    "force_max": 400.0
+  },
+  "scenario": {
+    "t_end": 2.0,
+    "dt": 0.0004,
+    "bump_height": 0.045,
+    "bump_at": 0.4,
+    "bump_duration": 0.25,
+    "road_kind": "bump",
+    "iso_speed_m_s": 5.0,
+    "iso_seed": 20261011,
+    "preview_s": 0.12
+  },
+  "gains": {
+    "skyhook": {
+      "c_sky": 200.0
+    },
+    "preview": {
+      "k_preview": -6000.0
+    },
+    "hocbf": {
+      "g1": 60.0,
+      "g2": 120.0
+    }
+  }
+}
